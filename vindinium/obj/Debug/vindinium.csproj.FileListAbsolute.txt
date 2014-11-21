@@ -1,0 +1,6 @@
+C:\Users\Alex\Tours\info\CS\vindinium-starter-csharp-master\vindinium\bin\Debug\client.exe.config
+C:\Users\Alex\Tours\info\CS\vindinium-starter-csharp-master\vindinium\bin\Debug\client.exe
+C:\Users\Alex\Tours\info\CS\vindinium-starter-csharp-master\vindinium\bin\Debug\client.pdb
+C:\Users\Alex\Tours\info\CS\vindinium-starter-csharp-master\vindinium\obj\Debug\vindinium.csprojResolveAssemblyReference.cache
+C:\Users\Alex\Tours\info\CS\vindinium-starter-csharp-master\vindinium\obj\Debug\client.exe
+C:\Users\Alex\Tours\info\CS\vindinium-starter-csharp-master\vindinium\obj\Debug\client.pdb
