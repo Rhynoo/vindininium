@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behavior\IBehavior.cs" />
+    <Compile Include="Behavior\DrinkingBehavior.cs" />
+    <Compile Include="Behavior\HuntingBehavior.cs" />
+    <Compile Include="Behavior\MiningBehavior.cs" />
     <Compile Include="Entities\Mine.cs" />
     <Compile Include="Entities\Tavern.cs" />
     <Compile Include="Utils.cs" />

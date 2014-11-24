@@ -4,24 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using vindinium.Behavior;
 
 namespace vindinium
 {
     class RhynoBot
     {
-        private ServerStuff serverStuff;
+        public ServerStuff serverStuff {get; set;}
         private Tile[][] board = null;
         private Random random = new Random();
-        private Hero hero;
-        private Path path = null;
-        private Pathfinder finder = null;
+        public Hero hero {get; set;}
 
-        private Tile goal = 0;
+        public Pathfinder finder { get; set; }
+
         private Pos lastPos = null;
 
         private Pos spawnPoint = null;
 
-        private static int LIFE_LIMIT = 25;
+        public static int LIFE_LIMIT = 25;
+
+        public IBehavior behavior{get; set;}
 
         private void Init()
         {
@@ -31,12 +33,12 @@ namespace vindinium
             {
                 ShowWebPage();
             }
-            goal = Tile.GOLD_MINE_NEUTRAL;
         }
 
         public RhynoBot(ServerStuff serverStuff)
         {
             this.serverStuff = serverStuff;
+            this.behavior = new MiningBehavior(this);
         }
 
         public void Run()
@@ -58,58 +60,7 @@ namespace vindinium
 
                 DidIDied();
 
-                DisplayGoal();
-
-                if (goal != Tile.TAVERN)
-                {
-                    if (hero.life <= LIFE_LIMIT)
-                    {
-                        path = null;
-                        goal = Tile.TAVERN;
-                    }
-                }
-                if (path != null)
-                {
-                    if (path.Count > 0)
-                    {
-                        Console.WriteLine("Path : " + path.ToString());
-                        FollowPath(path);
-                    }
-                    else path = null;
-                }
-                if (path == null)
-                {
-                    //i need a beer
-                    if (hero.life <= LIFE_LIMIT)
-                    {
-                        Tavern tavern = serverStuff.taverns.ElementAt(0);
-                        Console.WriteLine("Tavern : (" + tavern.x + ", " + tavern.y + ")");
-                        path = finder.FindPath(hero.pos.x, hero.pos.y, tavern.x, tavern.y);
-                        if (path != null)
-                        {
-                            path.Add(new Node(tavern.x, tavern.y));
-                            Console.WriteLine("Path : " + path.ToString());
-                            goal = Tile.TAVERN;
-                        }
-                    }
-                    else
-                    {
-                        Mine mine = null;
-                        for (int i = 0; i < serverStuff.mines.Count; i++)
-                        {
-                            mine = serverStuff.mines.ElementAt(i);
-                            if (mine.id != hero.id)
-                                break;
-                        }
-                        Console.WriteLine("Mine : (" + mine.x + ", " + mine.y + ")");
-                          if ((mine != null) && (mine.id != hero.id))
-                        {
-                            path = finder.FindPath(hero.pos.x, hero.pos.y, mine.x, mine.y);
-                            goal = Tile.GOLD_MINE_NEUTRAL;
-                        }
-                    }
-                }
-                if (path == null) serverStuff.moveHero(Direction.Stay);
+                behavior.Do();
 
                 lastPos = hero.pos;
 
@@ -124,22 +75,11 @@ namespace vindinium
             Console.Out.WriteLine("> RhynoBot finished fight");
         }
 
-        private void DisplayGoal()
-        {
-            if (goal == Tile.GOLD_MINE_NEUTRAL)
-                Console.Out.WriteLine("Goal : Mine");
-            else if (goal == Tile.TAVERN)
-                Console.Out.WriteLine("Goal : Tavern");
-            else
-                Console.Out.WriteLine("No goal");
-        }
-
         private void DidIDied()
         {
             if(Utils.Distance(hero.pos, lastPos) > 2)
             {
-                path = null;
-                goal = Tile.GOLD_MINE_NEUTRAL;
+                behavior = new MiningBehavior(this);
             }
         }
 
