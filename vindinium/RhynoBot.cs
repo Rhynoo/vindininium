@@ -58,7 +58,7 @@ namespace vindinium
 
                 Console.Out.WriteLine("Hero at : " + hero.pos.x + " " + hero.pos.y);
 
-                DidIDied();
+                AmIDead();
 
                 behavior.Do();
 
@@ -75,7 +75,7 @@ namespace vindinium
             Console.Out.WriteLine("> RhynoBot finished fight");
         }
 
-        private void DidIDied()
+        private void AmIDead()
         {
             if(Utils.Distance(hero.pos, lastPos) > 2)
             {
