@@ -78,7 +78,7 @@ namespace vindinium
         [DataMember]
         internal bool crashed;
 
-        int distanceToMyHero { get; set; }
+        public int distanceToMyHero { get; set; }
 
         public void UdpateDistance(Pos myPos, Pathfinder finder)
         {
@@ -87,8 +87,6 @@ namespace vindinium
                 distanceToMyHero = path.Count;
             else
                 distanceToMyHero = int.MaxValue;
-
-            //distanceToMyHero = Utils.Distance(myPos, pos);
         }
 
         public int CompareTo(Hero obj)
