@@ -164,7 +164,7 @@ namespace vindinium
             }
         }
 
-        private void MoveTowards(int x, int y)
+        public void MoveTowards(int x, int y)
         {
             if (hero.pos.y > y)
             {
