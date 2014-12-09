@@ -16,6 +16,11 @@ namespace vindinium.Behavior
             path = null;
             this.bot = bot;
         }
+		
+		public override string ToString ()
+		{
+			return "Drinking";
+		}
 
         public void CheckTransitions()
         {

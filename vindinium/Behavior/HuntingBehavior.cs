@@ -21,6 +21,11 @@ namespace vindinium.Behavior
             this.target = target;
             this.bot = bot;
         }
+		
+		public override string ToString ()
+		{
+			return "Hunting";
+		}
 
         public void CheckTransitions()
         {

@@ -45,9 +45,25 @@ namespace vindinium
 
             while (serverStuff.finished == false && serverStuff.errored == false)
             {
-                Console.Out.WriteLine("-- New Turn : " + serverStuff.currentTurn);
+                Console.Out.WriteLine("-- New Turn : " + serverStuff.currentTurn + " : " + this.behavior);
                 UpdateDatas();
-
+								
+				Console.Write ("Mines : ");
+				foreach (Mine mine in serverStuff.mines) {
+					Console.Write (mine.distance + " - ");
+				}
+				Console.WriteLine ();
+				Console.Write ("Tavernes : ");
+				foreach (Tavern tavern in serverStuff.taverns) {
+					Console.Write (tavern.distance + " - ");
+				}
+				Console.WriteLine ();
+				Console.Write ("Heros : ");
+				foreach (Hero h in serverStuff.heroes) {
+					Console.Write (h.distanceToMyHero + " - ");
+				}
+				Console.WriteLine ();
+				
                 if (serverStuff.currentTurn <= 4)
                 {
                     lastPos = hero.spawnPos;
