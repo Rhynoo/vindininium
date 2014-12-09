@@ -78,7 +78,7 @@ namespace vindinium.Behavior
         {
             foreach (Hero hero in bot.serverStuff.heroes)
             {
-                if ((hero.mineCount > bot.hero.mineCount) && (hero.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE))
+                if ((hero.life > bot.hero.life + 20) && (hero.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE))
                 {
                     targetToHunt = hero;
                     return true;
