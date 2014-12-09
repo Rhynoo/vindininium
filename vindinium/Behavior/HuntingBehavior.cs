@@ -12,11 +12,18 @@ namespace vindinium.Behavior
         Path path;
         Hero target;
 
+        public const int MAX_HUNTING_DISTANCE = 7;
+
         public HuntingBehavior(RhynoBot bot, Hero target)
         {
             path = null;
             this.target = target;
             this.bot = bot;
+        }
+
+        public void CheckTransitions()
+        {
+            //TODO
         }
 
         public void Do()

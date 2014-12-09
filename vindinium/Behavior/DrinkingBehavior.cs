@@ -17,6 +17,15 @@ namespace vindinium.Behavior
             this.bot = bot;
         }
 
+        public void CheckTransitions()
+        {
+            if ((path != null) && (path.Count == 0))
+            {
+                bot.behavior = new MiningBehavior(bot);
+                return;
+            }
+        }
+
         public void Do()
         {
             if (path != null)
@@ -25,11 +34,6 @@ namespace vindinium.Behavior
                 {
                     Console.WriteLine("Path : " + path.ToString());
                     bot.FollowPath(path);
-                }
-                else
-                {
-                    bot.behavior = new MiningBehavior(bot);
-                    return;
                 }
             }
 

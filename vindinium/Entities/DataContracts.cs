@@ -78,6 +78,8 @@ namespace vindinium
         [DataMember]
         internal bool crashed;
 
+        public int distanceToSpawnPoint { get; set; }
+
         public int distanceToMyHero { get; set; }
 
         public void UdpateDistance(Pos myPos, Pathfinder finder)
@@ -87,6 +89,15 @@ namespace vindinium
                 distanceToMyHero = path.Count;
             else
                 distanceToMyHero = int.MaxValue;
+        }
+
+        public void UpdateSpawnDistance(Pathfinder finder)
+        {
+            Path path = finder.FindPath(pos.x, pos.y, spawnPos.x, spawnPos.y);
+            if (path != null)
+                distanceToSpawnPoint = path.Count;
+            else
+                distanceToSpawnPoint = int.MaxValue;
         }
 
         public int CompareTo(Hero obj)

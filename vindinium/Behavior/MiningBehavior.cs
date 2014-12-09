@@ -11,20 +11,36 @@ namespace vindinium.Behavior
         RhynoBot bot;
         Path path;
 
+        Hero targetToHunt;
+
         public MiningBehavior(RhynoBot bot)
         {
             this.bot = bot;
             path = null;
         }
 
-        public void Do()
+        public void CheckTransitions()
         {
-            if (bot.hero.life <= RhynoBot.LIFE_LIMIT)
+            if (isDrinkingConditionCompleted())
             {
                 bot.behavior = new DrinkingBehavior(bot);
                 return;
             }
-            
+            else if (isFleeingConditionCompleted())//fleeing
+            {
+                bot.behavior = new FleeingBehavior(bot);
+                return;
+            }
+            else if (isHuntingConditionCompleted())//Hunting
+            {
+                bot.behavior = new HuntingBehavior(bot, targetToHunt);
+                return;
+            }
+            else return;
+        }
+
+        public void Do()
+        {   
             if (path != null)
             {
                 if (path.Count > 0)
@@ -49,9 +65,39 @@ namespace vindinium.Behavior
                 {
                     path = bot.finder.FindPath(bot.hero.pos.x, bot.hero.pos.y, mine.x, mine.y);
                 }
-                
             }
             if (path == null) bot.serverStuff.moveHero(Direction.Stay);
+        }
+
+        private bool isDrinkingConditionCompleted()
+        {
+            return (bot.hero.life <= RhynoBot.LIFE_LIMIT);
+        }
+
+        private bool isFleeingConditionCompleted()
+        {
+            foreach (Hero hero in bot.serverStuff.heroes)
+            {
+                if ((hero.mineCount > bot.hero.mineCount) && (hero.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE))
+                {
+                    targetToHunt = hero;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool isHuntingConditionCompleted()
+        {
+            foreach (Hero hero in bot.serverStuff.heroes)
+            {
+                if((hero.mineCount > bot.hero.mineCount) && (hero.distanceToMyHero <= HuntingBehavior.MAX_HUNTING_DISTANCE))
+                {
+                    targetToHunt = hero;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

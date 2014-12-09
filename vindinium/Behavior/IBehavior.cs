@@ -9,5 +9,6 @@ namespace vindinium.Behavior
     interface IBehavior
     {
         void Do();
+        void CheckTransitions();
     }
 }

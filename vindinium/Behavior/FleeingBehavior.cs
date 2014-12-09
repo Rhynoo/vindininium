@@ -10,15 +10,22 @@ namespace vindinium.Behavior
 		RhynoBot bot;
 		Path path;
 
+        public const int MAX_FLEE_DISTANCE = 5;
+
 		public FleeingBehavior (RhynoBot bot)
 		{
 			this.bot = bot;
 			this.path = null;
 		}
 
+        public void CheckTransitions()
+        {
+            //TODO
+        }
+
 		public void Do ()
 		{
-			Hero nearestEnemy = bot.serverStuff.heroes [1];
+			Hero nearestEnemy = bot.serverStuff.heroes [0];
 			Tavern nearestTavern = bot.serverStuff.taverns [0];
 			// Si la bière est proche
 			if (nearestTavern.distance < 8) {
@@ -77,7 +84,7 @@ namespace vindinium.Behavior
 			
 			Boolean xDirection = Math.Abs (distanceX) < Math.Abs (distanceY);
 			Tile[][] board = bot.serverStuff.board;
-			Pos direction = new Pos ();
+			Pos direction = new Pos (0,0);
 			
 			// Partir dans la direction opposée.
 			direction.x = xDirection ? (distanceX < 0 ? 1 : -1) : 0;

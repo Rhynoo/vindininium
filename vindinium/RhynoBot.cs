@@ -19,8 +19,6 @@ namespace vindinium
 
         private Pos lastPos = null;
 
-        private Pos spawnPoint = null;
-
         public static int LIFE_LIMIT = 25;
 
         public IBehavior behavior{get; set;}
@@ -52,13 +50,14 @@ namespace vindinium
 
                 if (serverStuff.currentTurn <= 4)
                 {
-                    spawnPoint = hero.pos;
-                    lastPos = spawnPoint;
+                    lastPos = hero.spawnPos;
                 }
 
                 Console.Out.WriteLine("Hero at : " + hero.pos.x + " " + hero.pos.y);
 
                 AmIDead();
+
+                behavior.CheckTransitions();
 
                 behavior.Do();
 
@@ -104,6 +103,7 @@ namespace vindinium
             foreach (Hero h in serverStuff.heroes)
             {
                 h.UdpateDistance(hero.pos, finder);
+                h.UpdateSpawnDistance(finder);
             }
             serverStuff.heroes.Sort();
         }
