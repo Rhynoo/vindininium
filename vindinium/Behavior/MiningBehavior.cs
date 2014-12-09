@@ -21,7 +21,7 @@ namespace vindinium.Behavior
         {
             if (bot.hero.life <= RhynoBot.LIFE_LIMIT)
             {
-                bot.behavior = new FleeingBehavior(bot);
+                bot.behavior = new DrinkingBehavior(bot);
                 return;
             }
             
