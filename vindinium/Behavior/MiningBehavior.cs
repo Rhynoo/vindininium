@@ -80,7 +80,6 @@ namespace vindinium.Behavior
             {
                 if ((hero.life > bot.hero.life + 20) && (hero.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE))
                 {
-                    targetToHunt = hero;
                     return true;
                 }
             }
