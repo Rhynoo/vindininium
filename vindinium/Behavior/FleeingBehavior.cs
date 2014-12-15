@@ -8,14 +8,14 @@ namespace vindinium.Behavior
 	class FleeingBehavior : IBehavior
 	{
 		RhynoBot bot;
-		Path path;
+		int nbrToursImmobile;
 
         public const int MAX_FLEE_DISTANCE = 5;
 
 		public FleeingBehavior (RhynoBot bot)
 		{
 			this.bot = bot;
-			this.path = null;
+			this.nbrToursImmobile = 0;
 		}
 		
 		public override string ToString ()
@@ -32,18 +32,26 @@ namespace vindinium.Behavior
 		{
 			Hero nearestEnemy = bot.serverStuff.heroes [0];
 			Tavern nearestTavern = bot.serverStuff.taverns [0];
+			Console.WriteLine ("Fleeing DO");
 			// Si la bière est proche
-			if (nearestTavern.distance < 8) {
+			if (nearestTavern.distance < MAX_FLEE_DISTANCE) {
+				Console.WriteLine ("nearestTavern.distance < MAX_FLEE_DISTANCE");
 				int distTavernX = (nearestTavern.x - bot.hero.pos.x);
 				int distTavernY = (nearestTavern.y - bot.hero.pos.y);
 				int distEnemyX = (nearestEnemy.pos.x - bot.hero.pos.x);
 				int distEnemyY = (nearestEnemy.pos.y - bot.hero.pos.y);
 				// Si la bière et l'ennemi ne sont pas dans la même direction
 				if (((distEnemyX > 0) ^ (distTavernX > 0)) || ((distEnemyY > 0) ^ (distTavernY > 0))) {
+					Console.WriteLine ("Fleeing : new DrinkingBehavior");
 					bot.behavior = new DrinkingBehavior (bot);
 					return;
 				}
 				// Sinon, ne pas aller vers la bière et continuer à fuire
+			}
+			// Si l'ennemi est trop loin, on repart vers une bière
+			if (nearestEnemy.distanceToMyHero > MAX_FLEE_DISTANCE || this.nbrToursImmobile > 4) {
+				bot.behavior = new DrinkingBehavior (bot);
+				return;
 			}
 			// Si un ennemi est proche
 			avoidEnemy (nearestEnemy);
@@ -51,7 +59,6 @@ namespace vindinium.Behavior
 		
 		private void avoidEnemy (Hero nearestEnemy)
 		{
-			path = null;
 			int distanceX = (nearestEnemy.pos.x - bot.hero.pos.x);
 			int distanceY = (nearestEnemy.pos.y - bot.hero.pos.y);
 			Pos direction = chooseDirection (distanceX, distanceY);
@@ -91,7 +98,6 @@ namespace vindinium.Behavior
 			}*/
 			
 			Boolean xDirection = Math.Abs (distanceX) < Math.Abs (distanceY);
-			Tile[][] board = bot.serverStuff.board;
 			Pos direction = new Pos (0, 0);
 			
 			// Partir dans la direction opposée.
@@ -103,10 +109,21 @@ namespace vindinium.Behavior
 				direction.y = xDirection ? (distanceY < 0 ? 1 : -1) : 0;
 			}
 			// Si cette deuxième direction est bouchée (on est dans un coin)
+			
+			// Si l'ennemi est sur la même ligne
+			if (distanceX == 0) {
+				direction.x = 1;
+				direction.y = 0;
+			} else if (distanceY == 0) { // Ou sur la même colonne
+				direction.x = 0;
+				direction.y = 1;
+			}
+			// Si ces deux (ou trois) direction
 			if (directionBouchee (direction)) {
 				// Ne pas bouger
 				direction.x = 0;
 				direction.y = 0;
+				this.nbrToursImmobile++;
 			}
 			
 			return direction;

@@ -16,8 +16,8 @@ namespace vindinium
         public Hero hero {get; set;}
 
         public Pathfinder finder { get; set; }
-
-        private Pos lastPos = null;
+		
+		public int lastLife = 0;
 
         public static int LIFE_LIMIT = 25;
 
@@ -48,11 +48,6 @@ namespace vindinium
                 Console.Out.WriteLine("-- New Turn : " + serverStuff.currentTurn + " : " + this.behavior);
                 UpdateDatas();
 								
-				Console.Write ("Mines : ");
-				foreach (Mine mine in serverStuff.mines) {
-					Console.Write (mine.distance + " - ");
-				}
-				Console.WriteLine ();
 				Console.Write ("Tavernes : ");
 				foreach (Tavern tavern in serverStuff.taverns) {
 					Console.Write (tavern.distance + " - ");
@@ -63,11 +58,6 @@ namespace vindinium
 					Console.Write (h.distanceToMyHero + " - ");
 				}
 				Console.WriteLine ();
-				
-                if (serverStuff.currentTurn <= 4)
-                {
-                    lastPos = hero.spawnPos;
-                }
 
                 Console.Out.WriteLine("Hero at : " + hero.pos.x + " " + hero.pos.y);
 
@@ -77,7 +67,7 @@ namespace vindinium
 
                 behavior.Do();
 
-                lastPos = hero.pos;
+                lastLife = hero.life;
 
                 Console.Out.WriteLine("-- Completed turn : " + serverStuff.currentTurn);
                 if (serverStuff.errored)
@@ -90,13 +80,17 @@ namespace vindinium
             Console.Out.WriteLine("> RhynoBot finished fight");
         }
 
-        private void AmIDead()
-        {
-            if(Utils.Distance(hero.pos, lastPos) > 2)
-            {
-                behavior = new MiningBehavior(this);
-            }
-        }
+        private void AmIDead ()
+		{
+			//if(Utils.Distance(hero.pos, hero.spawnPos) == 0 && hero.life > 95 && hero.mineCount==0 && serverStuff.currentTurn > 4)
+            if(hero.life > lastLife+60 && serverStuff.currentTurn > 4)
+			{
+				Console.WriteLine ("--------------");
+				Console.WriteLine ("--- DEAD ! ---");
+				Console.WriteLine ("--------------");
+				behavior = new MiningBehavior (this);
+			}
+		}
 
         private void UpdateDatas()
         {

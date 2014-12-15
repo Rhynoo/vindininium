@@ -17,6 +17,11 @@ namespace vindinium.Behavior
 			this.bot = bot;
 			path = null;
 		}
+		
+		public override string ToString ()
+		{
+			return "Mining";
+		}
 
 		public void CheckTransitions ()
 		{
@@ -66,10 +71,9 @@ namespace vindinium.Behavior
 
 		private bool isFleeingConditionCompleted ()
 		{
-			foreach (Hero hero in bot.serverStuff.heroes) {
-				if ((hero.life > bot.hero.life + 20) && (hero.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE)) {
-					return true;
-				}
+			Hero nearestEnemy = bot.serverStuff.heroes[0];
+			if ((nearestEnemy.life > bot.hero.life + 20) && (bot.hero.life < 40) && (nearestEnemy.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE)) {
+				return true;
 			}
 			return false;
 		}
@@ -77,7 +81,7 @@ namespace vindinium.Behavior
 		private bool isHuntingConditionCompleted ()
 		{
 			foreach (Hero hero in bot.serverStuff.heroes) {
-				if ((hero.mineCount > bot.hero.mineCount) && (bot.hero.life > (hero.life + 20)) && (hero.distanceToMyHero <= HuntingBehavior.MAX_HUNTING_DISTANCE)) {
+				if ((hero.mineCount > 2) && (bot.hero.life > (hero.life + 20)) && (hero.distanceToMyHero <= HuntingBehavior.MAX_HUNTING_DISTANCE)) {
 					targetToHunt = hero;
 					return true;
 				}

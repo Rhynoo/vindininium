@@ -1,0 +1,61 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Behavior/FleeingBehavior.cs">
+    <Files>
+      <File FileName="Behavior/MiningBehavior.cs" Line="84" Column="117" />
+      <File FileName="Behavior/DrinkingBehavior.cs" Line="67" Column="143" />
+      <File FileName="Behavior/FleeingBehavior.cs" Line="45" Column="59" />
+      <File FileName="../../tests/main.cs" Line="81" Column="9" />
+      <File FileName="RhynoBot.cs" Line="87" Column="5" />
+      <File FileName="Client.cs" Line="27" Column="4" />
+      <File FileName="Behavior/HuntingBehavior.cs" Line="75" Column="12" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Vindinium Git-Project" expanded="True">
+            <Node name="Behavior" expanded="True">
+              <Node name="FleeingBehavior.cs" selected="True" />
+            </Node>
+            <Node name="Entities" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Vindinium_220Git-Project>
+    <MonoDevelop.Ide.CustomExecutionModes>
+      <Data Name="Training (100)" Id="09e9404a-9554-42bc-83f3-1de41797ad08" ModeId="Default">
+        <CommandData>
+          <Item Key="MonoDevelop.Ide.Execution.CustomArgsCustomizer">
+            <Value Arguments="3va343j3 training 100" ctype="CustomArgsExecutionModeData">
+              <EnvironmentVariables />
+            </Value>
+          </Item>
+          <Item Key="MonoDevelop.Ide.Execution.MonoExecutionCustomizer">
+            <Value ctype="MonoExecutionParameters" />
+          </Item>
+        </CommandData>
+      </Data>
+      <Data Name="Arena" Id="fa3d9a7e-57a0-4f55-907a-a84164d73389" ModeId="Default">
+        <CommandData>
+          <Item Key="MonoDevelop.Ide.Execution.CustomArgsCustomizer">
+            <Value Arguments="3va343j3 arena 100" ctype="CustomArgsExecutionModeData">
+              <EnvironmentVariables />
+            </Value>
+          </Item>
+          <Item Key="MonoDevelop.Ide.Execution.MonoExecutionCustomizer">
+            <Value ctype="MonoExecutionParameters" />
+          </Item>
+        </CommandData>
+      </Data>
+    </MonoDevelop.Ide.CustomExecutionModes>
+  </MonoDevelop.Ide.ItemProperties.Vindinium_220Git-Project>
+</Properties>

@@ -69,17 +69,13 @@ namespace vindinium.Behavior
             return (bot.hero.life <= RhynoBot.LIFE_LIMIT);
         }
 
-        private bool isFleeingConditionCompleted()
-        {
-            foreach (Hero hero in bot.serverStuff.heroes)
-            {
-                if ((hero.life > bot.hero.life + 20) && (hero.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+		private bool isFleeingConditionCompleted ()
+		{
+			if ((target.life > bot.hero.life + 20) && (bot.hero.life < 40) && (target.distanceToMyHero <= FleeingBehavior.MAX_FLEE_DISTANCE)) {
+				return true;
+			}
+			return false;
+		}
 
         private bool isMiningConditionCompleted()
         {
