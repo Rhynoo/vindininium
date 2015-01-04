@@ -13,7 +13,7 @@ namespace vindinium
         /// </summary>
         /// <param name="pos1"></param>
         /// <param name="pos2"></param>
-        /// <returns></returns>
+        /// <returns>the distance</returns>
         public static int Distance(Pos pos1, Pos pos2)
         {
             return (int)(Math.Abs(pos1.x - pos2.x) + Math.Abs(pos1.y - pos2.y));

@@ -23,6 +23,9 @@ namespace vindinium
 
         public IBehavior behavior{get; set;}
 
+        /// <summary>
+        /// Initialise la partie
+        /// </summary>
         private void Init()
         {
             Console.Out.WriteLine("> RhynoBot fight !");
@@ -33,12 +36,18 @@ namespace vindinium
             }
         }
 
+        /// <summary>
+        /// Constructeur
+        /// </summary>
         public RhynoBot(ServerStuff serverStuff)
         {
             this.serverStuff = serverStuff;
             this.behavior = new MiningBehavior(this);
         }
 
+        /// <summary>
+        /// Routine d'éxecution du bot
+        /// </summary>
         public void Run()
         {
             Init();
@@ -80,10 +89,12 @@ namespace vindinium
             Console.Out.WriteLine("> RhynoBot finished fight");
         }
 
+        /// <summary>
+        /// Vérifie si le personnage est mort
+        /// </summary>
         private void AmIDead ()
 		{
-			//if(Utils.Distance(hero.pos, hero.spawnPos) == 0 && hero.life > 95 && hero.mineCount==0 && serverStuff.currentTurn > 4)
-            if(hero.life > lastLife+60 && serverStuff.currentTurn > 4)
+			if(hero.life > lastLife+60 && serverStuff.currentTurn > 4)
 			{
 				Console.WriteLine ("--------------");
 				Console.WriteLine ("--- DEAD ! ---");
@@ -92,6 +103,9 @@ namespace vindinium
 			}
 		}
 
+        /// <summary>
+        /// Met à jour les données de jeu
+        /// </summary>
         private void UpdateDatas()
         {
             hero = serverStuff.myHero;
@@ -157,6 +171,10 @@ namespace vindinium
             else serverStuff.moveHero(Direction.Stay);
         }
 
+        /// <summary>
+        /// Vérifie si une case est activable ou non
+        /// </summary>
+        /// <returns>vrai si elle est activable, faux sinon</returns>
         private bool IsTileactivable(Tile tile)
         {
             switch (tile)
@@ -174,6 +192,11 @@ namespace vindinium
             }
         }
 
+        /// <summary>
+        /// Fait se déplacer le joueur vers un point donnée
+        /// </summary>
+        /// <param name="x">abscisse du point</param>
+        /// <param name="y">ordonnée du point</param>
         public void MoveTowards(int x, int y)
         {
             if (hero.pos.y > y)

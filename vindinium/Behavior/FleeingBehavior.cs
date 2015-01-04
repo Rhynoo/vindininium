@@ -25,34 +25,34 @@ namespace vindinium.Behavior
 
         public void CheckTransitions()
         {
-            //TODO
+            Hero nearestEnemy = bot.serverStuff.heroes[0];
+            Tavern nearestTavern = bot.serverStuff.taverns[0];
+            // Si la bière est proche
+            if (nearestTavern.distance < MAX_FLEE_DISTANCE)
+            {
+                int distTavernX = (nearestTavern.x - bot.hero.pos.x);
+                int distTavernY = (nearestTavern.y - bot.hero.pos.y);
+                int distEnemyX = (nearestEnemy.pos.x - bot.hero.pos.x);
+                int distEnemyY = (nearestEnemy.pos.y - bot.hero.pos.y);
+                // Si la bière et l'ennemi ne sont pas dans la même direction
+                if (((distEnemyX > 0) ^ (distTavernX > 0)) || ((distEnemyY > 0) ^ (distTavernY > 0)))
+                {
+                    bot.behavior = new DrinkingBehavior(bot);
+                    return;
+                }
+                // Sinon, ne pas aller vers la bière et continuer à fuire
+            }
+            // Si l'ennemi est trop loin, on repart vers une bière
+            if (nearestEnemy.distanceToMyHero > MAX_FLEE_DISTANCE || this.nbrToursImmobile > 4)
+            {
+                bot.behavior = new DrinkingBehavior(bot);
+                return;
+            }
         }
 
 		public void Do ()
 		{
 			Hero nearestEnemy = bot.serverStuff.heroes [0];
-			Tavern nearestTavern = bot.serverStuff.taverns [0];
-			Console.WriteLine ("Fleeing DO");
-			// Si la bière est proche
-			if (nearestTavern.distance < MAX_FLEE_DISTANCE) {
-				Console.WriteLine ("nearestTavern.distance < MAX_FLEE_DISTANCE");
-				int distTavernX = (nearestTavern.x - bot.hero.pos.x);
-				int distTavernY = (nearestTavern.y - bot.hero.pos.y);
-				int distEnemyX = (nearestEnemy.pos.x - bot.hero.pos.x);
-				int distEnemyY = (nearestEnemy.pos.y - bot.hero.pos.y);
-				// Si la bière et l'ennemi ne sont pas dans la même direction
-				if (((distEnemyX > 0) ^ (distTavernX > 0)) || ((distEnemyY > 0) ^ (distTavernY > 0))) {
-					Console.WriteLine ("Fleeing : new DrinkingBehavior");
-					bot.behavior = new DrinkingBehavior (bot);
-					return;
-				}
-				// Sinon, ne pas aller vers la bière et continuer à fuire
-			}
-			// Si l'ennemi est trop loin, on repart vers une bière
-			if (nearestEnemy.distanceToMyHero > MAX_FLEE_DISTANCE || this.nbrToursImmobile > 4) {
-				bot.behavior = new DrinkingBehavior (bot);
-				return;
-			}
 			// Si un ennemi est proche
 			avoidEnemy (nearestEnemy);
 		}
@@ -62,41 +62,11 @@ namespace vindinium.Behavior
 			int distanceX = (nearestEnemy.pos.x - bot.hero.pos.x);
 			int distanceY = (nearestEnemy.pos.y - bot.hero.pos.y);
 			Pos direction = chooseDirection (distanceX, distanceY);
-			Console.WriteLine ("Fuite de l'ennemi '" + nearestEnemy.name + 
-			                   "' (" + nearestEnemy.pos.x + "," + nearestEnemy.pos.y + ") dans la direction" +
-			                   "("+direction.x+","+direction.y+")");
 			bot.MoveTowards (bot.hero.pos.x + direction.x, bot.hero.pos.y + direction.y);
 		}
 
 		private Pos chooseDirection (int distanceX, int distanceY)
-		{
-			/*Boolean xDirection = Math.Abs (distanceX) < Math.Abs (distanceY);
-			Tile[][] board = bot.serverStuff.board;
-			Pos direction = new Pos ();
-			if (xDirection && distanceX < 0 && board [bot.hero.pos.x + 1] [bot.hero.pos.y] == Tile.FREE) {
-				// Fuite direction X > 0
-				direction.x = 1;
-				direction.y = 0;
-				return direction;
-			}
-			if (xDirection && distanceX > 0 && board [bot.hero.pos.x - 1] [bot.hero.pos.y] == Tile.FREE) {
-				// Fuite direction Y < 0
-				direction.x = -1;
-				direction.y = 0;
-				return direction;
-			}
-			if (!xDirection && distanceY < 0 && board [bot.hero.pos.x] [bot.hero.pos.y + 1] == Tile.FREE) {
-				// Fuite direction Y > 0
-				direction.x = 0;
-				direction.y = 1;
-				return direction;
-			}
-			if (!xDirection && distanceY > 0 && board [bot.hero.pos.x] [bot.hero.pos.y - 1] == Tile.FREE) {
-				// Fuite direction Y < 0
-				direction.x = 0;
-				direction.y = -1;
-			}*/
-			
+		{	
 			Boolean xDirection = Math.Abs (distanceX) < Math.Abs (distanceY);
 			Pos direction = new Pos (0, 0);
 			

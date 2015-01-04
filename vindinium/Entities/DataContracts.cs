@@ -78,9 +78,11 @@ namespace vindinium
         [DataMember]
         internal bool crashed;
 
-        public int distanceToSpawnPoint { get; set; }
+        public int strength { get; private set; }
 
-        public int distanceToMyHero { get; set; }
+        public int distanceToSpawnPoint { get; private set; }
+
+        public int distanceToMyHero { get; private set; }
 
         public void UdpateDistance(Pos myPos, Pathfinder finder)
         {
